@@ -24,46 +24,75 @@
 	<h3> Last Sensors Reading: {{ time }} ==> <a href="/"class="button">REFRESH</a></h3>
     <hr>
 
-    <h3>TankName: A1 </h3>
-        <p>LightNumber: {{ LightNumber }}
-        LightStatus: {{ Light1Status }} </p>
-        <div id="g1"></div>
-        <img src="/plot/temp/A1" alt="Image Placeholder">
+    {% for tankName in tanks %}
+    <h3>TankName: {{ tankName }}</h3>
+        LightNumber: {{ LightNumber }}
+        LightStatus: {{ LightStatus }}
+
+        <div id={{ tankName }}></div>
 
         <hr>
+    {% endfor %}
 
-    <h3>TankName: A2 </h3>
-        <p>LightNumber: {{ LightNumber }}
-        LightStatus: {{ Light1Status }} </p>
-        <div id="g2"></div>
-        <img src="/plot/temp/A2" alt="Image Placeholder">
-        <hr>
+    <script>
+        for(var i = 0; i < 10; i++) {
+    window['var' + i] = i;
+    }
+    </script>
+
+
+    <script>
+
+
+     {% for tankName in tanks %}
+		var {{ tankName }};
+		document.addEventListener("DOMContentLoaded", function(event) {
+            gauge = new JustGage({
+				id: {{ tankName }},
+				value: 20,
+				valueFontColor: "yellow",
+				titleFontColor: "yellow",
+				min: 0,
+				max: 30,
+				title: {{ tankName }},
+				label: "Celcius"
+			});
+		});
+     {% endfor %}
+    </script>
+
+
+
+
+    <div id="g1"></div>
+    <div id="g2"></div>
 
     <script src="../static/raphael-2.1.4.min.js"></script>
     <script src="../static/justgage.js"></script>
+
     <script>
 		var g1;
         var g2;
 		document.addEventListener("DOMContentLoaded", function(event) {
 			g1 = new JustGage({
 				id: "g1",
-				value: 24,
+				value: 20,
 				valueFontColor: "yellow",
 				titleFontColor: "yellow",
-				min: 0,
-				max: 40,
+				min: -10,
+				max: 50,
 				title: "Temperature",
 				label: "Celcius"
 			});
 			g2 = new JustGage({
 				id: "g2",
-				value: 24,
+				value: 20,
 				valueFontColor: "yellow",
 				titleFontColor: "yellow",
 				min: 0,
-				max: 40,
-				title: "Temperature",
-				label: "Celcius"
+				max: 100,
+				title: "Humidity",
+				label: "%"
 			});
 		});
     </script>

@@ -1,7 +1,8 @@
 body{
-	background: green;
 	color: black;
-	padding:1%
+	padding:1%;
+	background-color: lightskyblue;
+
 }
 .button {
 	font: bold 15px Arial;
@@ -15,5 +16,5 @@ body{
 	border-left: 1px solid #CCCCCC;
 }
 img{
-	display: display: inline-block
+	display: inline-block
 }

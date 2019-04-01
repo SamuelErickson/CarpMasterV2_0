@@ -9,9 +9,17 @@ TankSettings = {'TankName': ["Tank_A1", "Tank_A2"], 'Thermo': ["Thermo1", "Therm
 LightSettings = {'LightName': ["Light1"],'TimeOn': ["5:00"],'TimeOff':["21:00"],"Photoperiod":[str(16)+" Hours"]}
 df_TankSettings = pd.DataFrame(data=TankSettings,columns=["TankName","Light","Thermo","TempSetPoint"])
 df_LightSettings = pd.DataFrame(data=LightSettings)
+df_Thermo1 = pd.DataFrame(columns=["Time","Temp"])
+
+df_TankSettings.to_csv("tankSettings.csv")
+df_LightSettings.to_csv("lightSettings.csv")
+df_Thermo1.to_csv("thermo1.csv",index=False)
+
+
 
 print(df_LightSettings)
 print(df_TankSettings)
+print(df_Thermo1)
 # Write a csv file containing tank temps short term
 # Write a csv file containing tank temps long term
 
