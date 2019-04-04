@@ -9,13 +9,14 @@ import io
 app = Flask(__name__)
 
 
-
 @app.route('/')
 def index():
+    global df_thermo1
+    df_thermo1 = pd.read_csv("thermo1.csv")
     templateData = {
         'time': "Add time here",
         'tanks': ["A1","A2"],
-         'temp': "16",
+         'temp': df_thermo1.loc[df_thermo1.shape[0]-1,"Temp"],
          'LightNumber'	: "Light1",
           'Light1Status'	: "Not Connected"
     #      'led'  : "what",
@@ -26,7 +27,6 @@ def index():
 
 @app.route('/plot/temp/A1')
 def plot_temp_A1():
-    df_thermo1 = pd.read_csv("thermo1.csv")
     ys = df_thermo1["Temp"]
     #ys = pd.DataFrame([16,15,14,13,10,0,1,2,3,4,5,6,7,6,5])#getDF()['Temperature']
     fig = Figure()
@@ -64,9 +64,9 @@ def plot_temp_A2():
     response.mimetype = 'image/png'
     return response
 
-#if __name__ == '__main__':
-#    app.run()
-
 if __name__ == "__main__":
-   app.run()
+    app.run(host='0.0.0.0', port=81, debug=False)
+
+#if __name__ == "__main__":
+#   app.run()
 
