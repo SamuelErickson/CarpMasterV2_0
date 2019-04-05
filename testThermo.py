@@ -47,6 +47,6 @@ def read_temp_raw(filename):
     return lines
 
 while True:
-    print(read_temp())
+    print(read_temp(device_folder_list))
     #deg_c, deg_f = read_temp()
     time.sleep(1)
