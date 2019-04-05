@@ -58,9 +58,11 @@ df1 = pd.read_csv("thermo1.csv")
 #t1 = 16 + random.random()*5
 t1 = read_temp()
 t2 = "No Sensor Configured"
+print(t1)
 
 #t2 = 16 + random.random()*5
 
 time = time.asctime()
 df1 = df1.append({"Time":time,"Temp":t1},ignore_index=True)
 df1.to_csv("thermo1.csv",index=False)
+print("temperature logged")
