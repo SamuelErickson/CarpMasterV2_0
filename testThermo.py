@@ -26,6 +26,8 @@ def read_temp_raw(filename):
 
 
 def read_temp(device_folder_list):
+    print("reading temp...")
+    print("the device folder list is "+str(device_folder_list))
     output = []
     for file in device_folder_list:
         lines = read_temp_raw(file)
@@ -36,7 +38,8 @@ def read_temp(device_folder_list):
         if equals_pos != -1:
             temp_string = lines[1][equals_pos + 2:]
             temp_c = float(temp_string) / 1000.0
-        output = (output,temp_c)
+        print("first temp is"+temp_c)
+        output = output+temp_c
     return output
 
 def read_temp_raw(filename):
