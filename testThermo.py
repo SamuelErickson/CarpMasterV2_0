@@ -28,7 +28,7 @@ def read_temp_raw(filename):
 def read_temp(device_folder_list):
     output = []
     for file in device_folder_list:
-        lines = read_temp_raw()
+        lines = read_temp_raw(file)
         while lines[0].strip()[-3:] != 'YES':
             time.sleep(0.2)
             lines = read_temp_raw()
