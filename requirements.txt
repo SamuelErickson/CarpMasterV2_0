@@ -1,4 +1,4 @@
-pandas
-flask
-python-crontab
-datetime
+python3-pandas
+python3-flask
+python3-crontab
+python3-datetime
