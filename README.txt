@@ -9,7 +9,13 @@ git clone https://github.com/SamuelErickson/CarpMasterV2_0.git
 sudo pip3 install -r CarpMasterV2_0/requirements.txt
 
 # This line installs all needed packages
+#SAM NEEDS TO CHECK THIS WORKS ON NEW RPI
+cat packages.txt | xargs sudo apt-get install
+
+
+
 python3 app.py
+
 
 # Add OneWire support
 sudo nano /boot/config.txt

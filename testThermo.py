@@ -1,6 +1,7 @@
 import os
 import glob
 import time
+import subprocess
 
 #from https://learn.adafruit.com/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing/software
 
