@@ -6,10 +6,10 @@ GPIO.setup(pinNum,GPIO.OUT)
 
 
 if GPIO.output(pinNum) == LOW:
-     print "lights on!"
+     print("lights on!")
      GPIO.output(pinNum, GPIO.HIGH)
 else if GPIO.output(pinNum) == HIGH:
-     print "lights off!"
+     print("lights off!")
      GPIO.output(pinNum, GPIO.LOW)
 else:
-    print "error"
+    print("error")
