@@ -24,7 +24,8 @@ Command3 = 'flask run --host=0.0.0.0 &'
 
 job2 = cron.new(command=Command2)
 job2.every_reboot()
-
+job3 = cron.new(command=Command3)
+job3.every_reboot()
 
 cron.write()
 
