@@ -1,18 +1,29 @@
 #This script edits the RPi cron file
-#to schedule regular automated tasks
+#It clears any currently running cron tasks
+#and schedules regular automated tasks
 
 from crontab import CronTab
 
-
-#There are five ways to include a job in cron
 #The following line only works in Linux
 #https://stackabuse.com/scheduling-jobs-with-python-crontab/
 cron = CronTab(user=True)
-cron.remove_all()  #remove all existing cron jobs
-Command1= 'python3 /home/pi/CarpMasterV2_0/example1.py'
+#remove all existing cron jobs
+cron.remove_all()
+
+#Schedule temperature checks
+Command1= 'sudo python3 /home/pi/CarpMasterV2_0/example1.py'
 
 job1 = cron.new(command=Command1)
 job1.minute.every(1)
+
+# Make web interface reboot upon restart
+Command2= 'sudo python3 /home/pi/CarpMasterV2_0/app.py'
+
+
+job2 = cron.new(command=Command2)
+job2.every_reboot()
+
+
 cron.write()
 
 #job.every_reboot()
