@@ -12,7 +12,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     global df_thermo1
-    df_thermo1 = pd.read_csv("thermo1.csv")
+    df_thermo1 = pd.read_csv("/home/pi/CarpMasterV2_0/thermo1.csv")
     templateData = {
         'time': "Add time here",
         'tanks': ["A1","A2"],

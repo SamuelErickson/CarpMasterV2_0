@@ -16,8 +16,10 @@ Command1= 'sudo python3 /home/pi/CarpMasterV2_0/example1.py'
 job1 = cron.new(command=Command1)
 job1.minute.every(1)
 
-# Make web interface reboot upon restart
-Command2= 'sudo python3 /home/pi/CarpMasterV2_0/app.py'
+# Make web interface reboot upon restart and run as background task
+Command2= 'export FLASK_APP=/home/pi/app.py'
+Command3 = 'flask run --host=0.0.0.0 &'
+
 
 
 job2 = cron.new(command=Command2)
