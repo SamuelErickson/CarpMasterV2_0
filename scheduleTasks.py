@@ -9,7 +9,7 @@ from crontab import CronTab
 #https://stackabuse.com/scheduling-jobs-with-python-crontab/
 cron = CronTab(user=True)
 cron.remove_all()  #remove all existing cron jobs
-Command1= 'python3 /home/pi/CarpMasterV2_0/example1.py >> test2.txt'
+Command1= 'python3 /home/pi/CarpMasterV2_0/example1.py >> /home/pi/CarpMasterV2_0/test.txt'
 
 job1 = cron.new(command=Command1)
 job1.minute.every(1)
