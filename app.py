@@ -4,6 +4,8 @@ from matplotlib.figure import Figure
 import pandas as pd
 import numpy as np
 import io
+import RPi.GPIO as GPIO
+
 
 
 app = Flask(__name__)
@@ -13,12 +15,29 @@ app = Flask(__name__)
 def index():
     global df_thermo1
     df_thermo1 = pd.read_csv("/home/pi/CarpMasterV2_0/thermo1.csv")
+    temp = df_thermo1.loc[df_thermo1.shape[0] - 1, "Temp"]
+
+
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
+    light1Pin= 17
+    GPIO.setup(light1Pin, GPIO.OUT)
+
+    if GPIO.input(light1Pin) == GPIO.LOW:
+        lightStatus = "OFF"
+    elif GPIO.input(light1Pin) == GPIO.HIGH:
+        lightStatus = "HIGH"
+    else:
+        lightStatus = "ERROR"
+
+
+
     templateData = {
         'time': "Add time here",
         'tanks': ["A1","A2"],
-         'temp': df_thermo1.loc[df_thermo1.shape[0]-1,"Temp"],
+         'temp': temp,
          'LightNumber'	: "Light1",
-          'Light1Status'	: "Not Connected"
+          'Light1Status'	: lightStatus
     #      'led'  : "what",
     #      'controlSts' : "what",
     #      'HumSts' : "what"

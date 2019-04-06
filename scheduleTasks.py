@@ -26,6 +26,7 @@ job2 = cron.new(command=Command2)
 job2.minute.every(1)
 
 
+
 # Make web interface reboot upon restart and run as background task
 #Command2 = '{ export FLASK_APP=/home/pi/CarpMasterV2_0/app.py; flask run --host=0.0.0.0 & }'
 
