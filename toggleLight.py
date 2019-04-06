@@ -5,11 +5,9 @@ pinNum = 17
 GPIO.setup(pinNum,GPIO.OUT)
 
 
-if GPIO.input(pinNum) == LOW:
-     print("lights on!")
+if GPIO.input(pinNum) == GPIO.LOW:
      GPIO.output(pinNum, GPIO.HIGH)
-elif GPIO.input(pinNum) == HIGH:
-     print("lights off!")
+elif GPIO.input(pinNum) == GPIO.HIGH:
      GPIO.output(pinNum, GPIO.LOW)
 else:
     print("error")
