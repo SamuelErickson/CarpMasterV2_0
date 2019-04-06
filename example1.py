@@ -1,3 +1,3 @@
 from datetime import datetime
-myFile = open('append.txt', 'a')
+myFile = open('/home/pi/append.txt', 'a')
 myFile.write('\nAccessed on ' + str(datetime.now()))
