@@ -30,6 +30,7 @@ def read_temp(device_folder_list):
     print("the device folder list is "+str(device_folder_list))
     output = []
     for file in device_folder_list:
+
         lines = read_temp_raw(file)
         while lines[0].strip()[-3:] != 'YES':
             time.sleep(0.2)
