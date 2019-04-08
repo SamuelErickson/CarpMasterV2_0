@@ -67,7 +67,6 @@ def index():
 
 @app.route('/plot/temp')
 def plot_temp():
-    ys = df_tempData["Temp"] #.groupby("Sensor")
     #ys = pd.DataFrame([16,15,14,13,10,0,1,2,3,4,5,6,7,6,5])#getDF()['Temperature']
     fig = Figure()
     axis = fig.add_subplot(1, 1, 1)
@@ -79,7 +78,12 @@ def plot_temp():
 
     #group by sensor!
     #https://stackoverflow.com/questions/46717359/pandas-plot-multiple-category-lines
-    axis.plot(ys)
+
+   # ys = df_tempData[df_tempData['Sensor']=='Thermo1']["Temp"].values
+    #axis.plot(ys)
+    for label, grp in df_tempData.groupby('Sensor'):
+        grp.plot(y = 'Temp',ax=axis, label=label)
+
     canvas = FigureCanvas(fig)
     output = io.BytesIO()
     canvas.print_png(output)
