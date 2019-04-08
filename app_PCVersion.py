@@ -14,27 +14,39 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     global df_thermo1
-    df_thermo1 = pd.read_csv("/home/pi/CarpMasterV2_0/thermo1.csv")
-    temp = df_thermo1.loc[df_thermo1.shape[0] - 1, "Temp"]
+    df_thermo1 = pd.read_csv("thermo1.csv")
+
+    global df_tempData
+    df_tempData = pd.read_csv("tempData.csv")
 
 
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setwarnings(False)
-    light1Pin= 17
-    GPIO.setup(light1Pin, GPIO.OUT)
+    temp = 5
+    #temp = df_thermo1.loc[df_thermo1.shape[0] - 1, "Temp"]
 
-    if GPIO.input(light1Pin) == GPIO.LOW:
-        lightStatus = "OFF"
-    elif GPIO.input(light1Pin) == GPIO.HIGH:
-        lightStatus = "HIGH"
-    else:
-        lightStatus = "ERROR"
 
+    #GPIO.setmode(GPIO.BCM)
+    #GPIO.setwarnings(False)
+    #light1Pin= 17
+    #GPIO.setup(light1Pin, GPIO.OUT)
+
+    #if GPIO.input(light1Pin) == GPIO.LOW:
+    #    lightStatus = "OFF"
+    #elif GPIO.input(light1Pin) == GPIO.HIGH:
+    #    lightStatus = "HIGH"
+    #else:
+    #    lightStatus = "ERROR"
+
+    lightStatus = "not configured for PC test version"
+
+    # Pandas to HTML https://sarahleejane.github.io/learning/python/2015/08/09/simple-tables-in-webapps-using-flask-and-pandas-with-python.html
+    # Return to above to format/style tables
 
     df_config = pd.read_csv("tankSettings.csv")
-    df_config.set_index(['TankName'], inplace=True)
-    df_config.index.name=None
-    tables = [df_config.to_html()]
+    #df_config.index.name=None
+    df_status = pd.read_csv("tankStatus.csv")
+
+    ConfigTables = [df_config.to_html(index=False,columns=["TankName","Status","TempSetPoint","TempSensor","Photoperiod (h)","LightsOnTime","LightsOffTime","Lights"])]
+    StatusTables = [df_status.to_html(index=False)]
 
     templateData = {
         'time': "Add time here",
@@ -42,27 +54,20 @@ def index():
          'temp': temp,
          'LightNumber'	: "Light1",
           'Light1Status'	: lightStatus,
-        'tables': tables
+        'ConfigTables': ConfigTables,
+        'StatusTables': StatusTables
     #      'led'  : "what",
     #      'controlSts' : "what",
     #      'HumSts' : "what"
     }
     return render_template('index.html', **templateData)
 
-@app.route("/tables")
-def show_tables():
-    df_config = pd.read_csv("tankSettings.csv")
-    df_config.set_index(['TankName'], inplace=True)
-    df_config.index.name=None
-    #return render_template('view.html',tables=[df_config.to_html()])
-    #titles = ['na', 'Female surfers', 'Male surfers'])
 
 
 
-
-@app.route('/plot/temp/A1')
-def plot_temp_A1():
-    ys = df_thermo1["Temp"]
+@app.route('/plot/temp')
+def plot_temp():
+    ys = df_tempData["Temp"] #.groupby("Sensor")
     #ys = pd.DataFrame([16,15,14,13,10,0,1,2,3,4,5,6,7,6,5])#getDF()['Temperature']
     fig = Figure()
     axis = fig.add_subplot(1, 1, 1)
@@ -71,6 +76,9 @@ def plot_temp_A1():
     axis.grid(True)
     axis.set_ylim(0,40)
    # xs = range(len(ys))
+
+    #group by sensor!
+    #https://stackoverflow.com/questions/46717359/pandas-plot-multiple-category-lines
     axis.plot(ys)
     canvas = FigureCanvas(fig)
     output = io.BytesIO()

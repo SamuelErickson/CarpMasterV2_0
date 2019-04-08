@@ -24,11 +24,29 @@
 	<h3> Last Sensors Reading: {{ time }} ==> <a href="/"class="button">REFRESH</a></h3>
     <hr>
 
+    <div class=page>
+  <h3>System Configuration</h3>
+  {% for table in ConfigTables %}
+    {{ table|safe }}
+  {% endfor %}
+    </div>
+    <hr>
+    <div class=page>
+
+   <div class=page>
+  <h3>System Status</h3>
+  {% for table in StatusTables %}
+    {{ table|safe }}
+  {% endfor %}
+    </div>
+    <hr>
+    <div class=page>
+
     <h3>TankName: A1 </h3>
         <p>LightNumber: {{ LightNumber }}
         LightStatus: {{ Light1Status }} </p>
         <div id="g1"></div>
-        <img src="/plot/temp/A1" alt="Image Placeholder">
+        <img src="/plot/temp" alt="Image Placeholder">
 
         <hr>
 

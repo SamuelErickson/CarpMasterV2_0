@@ -3,23 +3,48 @@ import numpy as np
 
 # Write a csv file containing tank names, sensors, etc
 
+#Edit below dictionary with values to reflect configuration of your equipment
+TankConfig = {'TankName': ["Tank_A1", "Tank_A2","Tank_B1", "Tank_B2","Tank_D1", "Tank_D2"],
+                'Status':["Online", "Online","Under Construction", "Under Construction","Online", "Online"],
+                'TempSensor': ["Thermo1", "Thermo2","None","None","None","None"],
+                #Edit line below with serial numbers of your DS18B20 temp sensors!
+                'TempSensorSerialID':["ID#", "ID#","None","None","None","None"],
+                'TempSetPoint': ["16", "16","NA","NA","Variable","Variable"],
+                'Lights': [["Light1"], ["Light1"],"Other","Other","Other","Other"],
+                "Photoperiod (h)":[12,12,"NA","NA",16,16],
+                'LightsOnTime': ["5:00","5:00","5:00","5:00","5:00","5:00"],
+                'LightsOffTime': ["21:00","21:00","21:00","21:00","21:00","21:00"]
 
-TankSettings = {'TankName': ["Tank_A1", "Tank_A2"], 'Thermo': ["Thermo1", "Thermo2"],'TempSetPoint': ["16", "16"],
-            'Light': ["Light1", "Light1"]}
+                }
 LightSettings = {'LightName': ["Light1"],'TimeOn': ["5:00"],'TimeOff':["21:00"],"Photoperiod":[str(16)+" Hours"]}
-df_TankSettings = pd.DataFrame(data=TankSettings,columns=["TankName","Light","Thermo","TempSetPoint"])
+
+
+
+df_TankStatus = pd.DataFrame(columns=TankConfig["TankName"],index=["Temp","LightStatus"])
+
+df_TankConfig = pd.DataFrame(data=TankConfig)
 df_LightSettings = pd.DataFrame(data=LightSettings)
+
 df_Thermo1 = pd.DataFrame(columns=["Time","Temp"])
 
-df_TankSettings.to_csv("tankSettings.csv")
-df_LightSettings.to_csv("lightSettings.csv")
+df_TempData = pd.DataFrame(columns=["Time","Sensor","Temp"])
+
+df_TankConfig.to_csv("tankSettings.csv",index=False)
+df_LightSettings.to_csv("lightSettings.csv",index=False)
 df_Thermo1.to_csv("thermo1.csv",index=False)
+
+df_TempData.to_csv("tempData.csv",index=False)
+
+df_TankStatus.to_csv("tankStatus.csv")
 
 
 
 print(df_LightSettings)
-print(df_TankSettings)
+print(df_TankConfig)
 print(df_Thermo1)
+print(df_TankStatus)
+
+
 # Write a csv file containing tank temps short term
 # Write a csv file containing tank temps long term
 

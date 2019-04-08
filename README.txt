@@ -12,6 +12,7 @@ sudo pip3 install -r CarpMasterV2_0/requirements.txt
 #SAM NEEDS TO CHECK THIS WORKS ON NEW RPI
 cat packages.txt | xargs sudo apt-get install
 
+#Next make sure that all hardware is installed correctly.
 
 
 python3 app.py
