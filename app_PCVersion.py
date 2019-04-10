@@ -19,6 +19,13 @@ def index():
     global df_tempData
     df_tempData = pd.read_csv("tempData.csv")
 
+    global df_config
+    df_config = pd.read_csv("tankSettings.csv")
+    #df_config.index.name=None
+
+    global df_status
+    df_status = pd.read_csv("tankStatus.csv",index_col=0)
+
 
     temp = 5
     #temp = df_thermo1.loc[df_thermo1.shape[0] - 1, "Temp"]
@@ -41,12 +48,10 @@ def index():
     # Pandas to HTML https://sarahleejane.github.io/learning/python/2015/08/09/simple-tables-in-webapps-using-flask-and-pandas-with-python.html
     # Return to above to format/style tables
 
-    df_config = pd.read_csv("tankSettings.csv")
-    #df_config.index.name=None
-    df_status = pd.read_csv("tankStatus.csv")
+
 
     ConfigTables = [df_config.to_html(index=False,columns=["TankName","Status","TempSetPoint","TempSensor","Photoperiod (h)","LightsOnTime","LightsOffTime","Lights"])]
-    StatusTables = [df_status.to_html(index=False)]
+    StatusTables = [df_status.to_html()]
 
     templateData = {
         'time': "Add time here",
@@ -82,7 +87,7 @@ def plot_temp():
    # ys = df_tempData[df_tempData['Sensor']=='Thermo1']["Temp"].values
     #axis.plot(ys)
     for label, grp in df_tempData.groupby('Sensor'):
-        grp.plot(y = 'Temp',ax=axis, label=label)
+        grp.plot(x='Time',y = 'Temp',ax=axis, label=label)
 
     canvas = FigureCanvas(fig)
     output = io.BytesIO()

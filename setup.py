@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import time
 
 # Write a csv file containing tank names, sensors, etc
 
@@ -18,9 +19,20 @@ TankConfig = {'TankName': ["Tank_A1", "Tank_A2","Tank_B1", "Tank_B2","Tank_D1", 
                 }
 LightSettings = {'LightName': ["Light1"],'TimeOn': ["5:00"],'TimeOff':["21:00"],"Photoperiod":[str(16)+" Hours"]}
 
+#Function: Initialize lights!
+timeNow = time.asctime()
+#CHECK whether light should be on right now or off right now and set up lights...
+
+
 
 
 df_TankStatus = pd.DataFrame(columns=TankConfig["TankName"],index=["Temp","LightStatus"])
+
+
+#Start some tanks right away, need to check time first
+#tanks = ['Tank_A1', 'Tank_A2']
+#df_TankStatus.loc["LightStatus", tanks] = 'ON'
+
 
 df_TankConfig = pd.DataFrame(data=TankConfig)
 df_LightSettings = pd.DataFrame(data=LightSettings)

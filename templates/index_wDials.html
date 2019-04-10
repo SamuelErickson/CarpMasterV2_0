@@ -42,14 +42,50 @@
     <hr>
     <div class=page>
 
-    <h3> Temperature Monitoring </h3>
-
+    <h3>TankName: A1 </h3>
+        <p>LightNumber: {{ LightNumber }}
+        LightStatus: {{ Light1Status }} </p>
+        <div id="g1"></div>
         <img src="/plot/temp" alt="Image Placeholder">
 
         <hr>
 
-          <p>LightNumber: {{ LightNumber }}
+    <h3>TankName: A2 </h3>
+        <p>LightNumber: {{ LightNumber }}
         LightStatus: {{ Light1Status }} </p>
+        <div id="g2"></div>
+        <img src="/plot/temp/A2" alt="Image Placeholder">
+        <hr>
+
+    <script src="../static/raphael-2.1.4.min.js"></script>
+    <script src="../static/justgage.js"></script>
+    <script>
+		var g1;
+        var g2;
+		document.addEventListener("DOMContentLoaded", function(event) {
+			g1 = new JustGage({
+				id: "g1",
+				value: {{ temp }},
+				valueFontColor: "yellow",
+				titleFontColor: "yellow",
+				min: 0,
+				max: 40,
+				title: "Temperature",
+				label: "Celcius"
+			});
+			g2 = new JustGage({
+				id: "g2",
+				value: 24,
+				valueFontColor: "yellow",
+				titleFontColor: "yellow",
+				min: 0,
+				max: 40,
+				title: "Temperature",
+				label: "Celcius"
+			});
+		});
+    </script>
+
 
 
 </body>
