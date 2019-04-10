@@ -16,8 +16,9 @@ def configureDS18B20():
     base_dir = '/sys/bus/w1/devices/'
     # I need to modify this to be a list rather than a single
     # Folder!
-    device_folder = glob.glob(base_dir + '28*')[0]
-    device_file = device_folder + '/w1_slave'
+    device_folder = glob.glob(base_dir + '28*')
+    print(device_folder)
+    device_file = device_folder[0] + '/w1_slave'
 
 def read_temp_raw():
     # Code taken from Adafruit DS18B20 tutorial
