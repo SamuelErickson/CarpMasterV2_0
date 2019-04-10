@@ -9,6 +9,7 @@ def configureDS18B20():
     #code adapted from Adafruit tutorial
     # https://learn.adafruit.com/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing/software
     global device_file
+    global device_files
     # Commands to start interface running
     os.system('modprobe w1-gpio')
     os.system('modprobe w1-therm')
@@ -17,9 +18,7 @@ def configureDS18B20():
     # I need to modify this to be a list rather than a single
     # Folder!
     device_folder = glob.glob(base_dir + '28*')
-    print(device_folder)
-    device_folder = [i + '/w1_slave' for i in device_folder] # A list comprehension
-    print(device_folder)
+    device_files = [i + '/w1_slave' for i in device_folder] # A list comprehension
     device_file = device_folder[0]
     #device_file = device_folder[0] + '/w1_slave'
 
@@ -36,21 +35,25 @@ def read_temp():
     # Reads data from the file on the RPi reporting temperature data
     # Checks for errors, extracts results
     # I modified to only return celcius
-    lines = read_temp_raw()
-    while lines[0].strip()[-3:] != 'YES':
-        time.sleep(0.2)
+    temp_list = []
+    for file in device_files:
+        print("reading from "+file)
         lines = read_temp_raw()
-    equals_pos = lines[1].find('t=')
-    if equals_pos != -1:
-        temp_string = lines[1][equals_pos+2:]
-        temp_c = float(temp_string) / 1000.0
-        temp_f = temp_c * 9.0 / 5.0 + 32.0
-        return temp_c
+        while lines[0].strip()[-3:] != 'YES':
+            time.sleep(0.2)
+            lines = read_temp_raw()
+        equals_pos = lines[1].find('t=')
+        if equals_pos != -1:
+            temp_string = lines[1][equals_pos+2:]
+            temp_c = float(temp_string) / 1000.0
+            temp_f = temp_c * 9.0 / 5.0 + 32.0
+            temp_list = temp_list+[temp_c]
+    return temp_c
 
 
 def main():
     configureDS18B20()
-    print(read_temp_raw())
+    print(read_temp())
 
 main()
 
