@@ -73,7 +73,7 @@ for sensor in df_config["TempSensor"].tolist():
     #df_status[sensor]
     #Following line finds the names of the tanks associated with the current sensor
     # being iterated over, returns array
-    tanks = df_config[df_config['TempSensor'] == sensor]['TankName'].values.to_list()
+    tanks = df_config[df_config['TempSensor'] == sensor]['TankName'].values
     df_status.loc["Temp", tanks] = T
 
 #df2 = pd.read_csv("thermo2.csv")
