@@ -18,7 +18,7 @@ def configureDS18B20():
     # Folder!
     device_folder = glob.glob(base_dir + '28*')
     print(device_folder)
-    [i + '/w1_slave' for i in device_folder] # A list comprehension
+    device_folder = [i + '/w1_slave' for i in device_folder] # A list comprehension
     print(device_folder)
     device_file = device_folder[0]
     #device_file = device_folder[0] + '/w1_slave'
