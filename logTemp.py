@@ -46,6 +46,7 @@ def read_temp():
 
 def main():
     configureDS18B20()
+    print(read_temp_raw())
 
 main()
 
@@ -63,6 +64,6 @@ print(t1)
 #t2 = 16 + random.random()*5
 
 time = time.asctime()
-df1 = df1.append({"Time":time,"Temp":t1},ignore_index=True)
-df1.to_csv("thermo1.csv",index=False)
+#df1 = df1.append({"Time":time,"Temp":t1},ignore_index=True)
+#df1.to_csv("thermo1.csv",index=False)
 print("temperature logged")
