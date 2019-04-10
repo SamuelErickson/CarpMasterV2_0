@@ -38,7 +38,6 @@ def read_temp():
     # I modified to only return celcius
     temp_list = []
     for file in device_files:
-        print("reading from "+file)
         lines = read_temp_raw(file)
         while lines[0].strip()[-3:] != 'YES':
             time.sleep(0.2)
@@ -73,11 +72,9 @@ def measureAndRecord():
         df_status.loc["Temp", tanks] = T
     df_tempData.to_csv("tempData.csv",index=False)
     df_status.to_csv("tankStatus.csv")
-    print("temperature logged")
 
 while True:
     measureAndRecord()
-    print("temp recorded")
     time.sleep(5)
 
 #df2 = pd.read_csv("thermo2.csv")
