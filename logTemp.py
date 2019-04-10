@@ -22,7 +22,7 @@ def configureDS18B20():
     device_file = device_folder[0]
     #device_file = device_folder[0] + '/w1_slave'
 
-def read_temp_raw():
+def read_temp_raw(device_file):
     # Code taken from Adafruit DS18B20 tutorial
     # Reads data from a text file
     f = open(device_file, 'r')
@@ -38,7 +38,7 @@ def read_temp():
     temp_list = []
     for file in device_files:
         print("reading from "+file)
-        lines = read_temp_raw()
+        lines = read_temp_raw(file)
         while lines[0].strip()[-3:] != 'YES':
             time.sleep(0.2)
             lines = read_temp_raw()
