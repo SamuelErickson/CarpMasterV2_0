@@ -4,14 +4,14 @@ import time
 import SendEmailAlert as sea
 
 def getTemp(id):
-    #Pass ID number of thermometer, get value
+    # Pass ID number of thermometer, get value
     return 16 + random.random()*5
-#Step one, get thermometers to check
+# Step one, get thermometers to check
 
 df_config = pd.read_csv("tankSettings.csv")
 df_config = df_config[df_config['TempSensor']!="None"]
 df_config = df_config[['TankName','TempSensor','TempSensorSerialID','TempSetPoint']]
-#df2 = pd.read_csv("thermo2.csv")
+# df2 = pd.read_csv("thermo2.csv")
 
 df1 = pd.read_csv("thermo1.csv")
 

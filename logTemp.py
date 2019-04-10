@@ -4,11 +4,12 @@ import time
 import os
 import glob
 import RPi.GPIO as GPIO
+import SendEmailAlert as sea
 
 def configureDS18B20():
     #code adapted from Adafruit tutorial
     # https://learn.adafruit.com/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing/software
-    global device_file
+    #global device_file
     global device_files
     # Commands to start interface running
     os.system('modprobe w1-gpio')
@@ -19,7 +20,7 @@ def configureDS18B20():
     # Folder!
     device_folder = glob.glob(base_dir + '28*')
     device_files = [i + '/w1_slave' for i in device_folder] # A list comprehension
-    device_file = device_folder[0]
+    #device_file = device_folder[0]
     #device_file = device_folder[0] + '/w1_slave'
 
 def read_temp_raw(device_file):
@@ -51,15 +52,29 @@ def read_temp():
     return temp_list
 
 
-def main():
-    configureDS18B20()
-    print(read_temp())
+configureDS18B20()
+temps = read_temp() # get list of temperatures
 
-main()
+df_config = pd.read_csv("tankSettings.csv") # get the tank configuration
+df_config = df_config[df_config['TempSensor']!="None"] # Remove tanks which don't have thermos
+df_config = df_config[['TankName','TempSensor','TempSensorSerialID','TempSetPoint']] # Variables of interest
+
+df_tempData = pd.read_csv("tempData.csv") # open temp data log file
+df_status = pd.read_csv("tankStatus.csv",index_col=0) # open current status file
 
 
-df1 = pd.read_csv("thermo1.csv")
 
+i = 0
+for sensor in df_config["TempSensor"].tolist():
+    # Iterate over all temp sensors, measure and save values
+    timeNow = time.asctime()
+    T = temps[i]
+    df_tempData = df_tempData.append({"Time": timeNow, "Sensor":sensor, "Temp": T}, ignore_index=True)
+    #df_status[sensor]
+    #Following line finds the names of the tanks associated with the current sensor
+    # being iterated over, returns array
+    tanks = df_config[df_config['TempSensor'] == sensor]['TankName'].to_list()
+    df_status.loc["Temp", tanks] = T
 
 #df2 = pd.read_csv("thermo2.csv")
 
@@ -73,4 +88,20 @@ df1 = pd.read_csv("thermo1.csv")
 #time = time.asctime()
 #df1 = df1.append({"Time":time,"Temp":t1},ignore_index=True)
 #df1.to_csv("thermo1.csv",index=False)
+
+#df1 = df1.append({"Time":timeNow,"Temp":t1},ignore_index=True)
+#df1.to_csv("thermo1.csv",index=False)
+
+df_tempData.to_csv("tempData.csv",index=False)
+df_status.to_csv("tankStatus.csv")
+
+
+#Step four, Append results to long term data file
+
+if True or 25 > 30:
+    sea.sendEmailAlert("Error temp too high")
+
+
+
 print("temperature logged")
+
