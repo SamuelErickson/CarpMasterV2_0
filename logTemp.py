@@ -20,6 +20,7 @@ def configureDS18B20():
     print(device_folder)
     [i + '/w1_slave' for i in device_folder] # A list comprehension
     print(device_folder)
+    device_file = device_folder[0]
     #device_file = device_folder[0] + '/w1_slave'
 
 def read_temp_raw():
