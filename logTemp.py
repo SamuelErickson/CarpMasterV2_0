@@ -51,30 +51,34 @@ def read_temp():
             temp_list = temp_list+[temp_c]
     return temp_list
 
+def measureAndRecord():
+    configureDS18B20()
+    temps = read_temp() # get list of temperatures
+    df_config = pd.read_csv("tankSettings.csv") # get the tank configuration
+    df_config = df_config[df_config['TempSensor']!="None"] # Remove tanks which don't have thermos
+    df_config = df_config[['TankName','TempSensor','TempSensorSerialID','TempSetPoint']] # Variables of interest
 
-configureDS18B20()
-temps = read_temp() # get list of temperatures
+    df_tempData = pd.read_csv("tempData.csv") # open temp data log file
+    df_status = pd.read_csv("tankStatus.csv",index_col=0) # open current status file
+    i = 0
+    for sensor in df_config["TempSensor"].tolist():
+        # Iterate over all temp sensors, measure and save values
+        timeNow = time.asctime()
+        T = temps[i]
+        df_tempData = df_tempData.append({"Time": timeNow, "Sensor":sensor, "Temp": T}, ignore_index=True)
+        #df_status[sensor]
+        #Following line finds the names of the tanks associated with the current sensor
+        # being iterated over, returns array
+        tanks = df_config[df_config['TempSensor'] == sensor]['TankName'].values
+        df_status.loc["Temp", tanks] = T
+    df_tempData.to_csv("tempData.csv",index=False)
+    df_status.to_csv("tankStatus.csv")
+    print("temperature logged")
 
-df_config = pd.read_csv("tankSettings.csv") # get the tank configuration
-df_config = df_config[df_config['TempSensor']!="None"] # Remove tanks which don't have thermos
-df_config = df_config[['TankName','TempSensor','TempSensorSerialID','TempSetPoint']] # Variables of interest
-
-df_tempData = pd.read_csv("tempData.csv") # open temp data log file
-df_status = pd.read_csv("tankStatus.csv",index_col=0) # open current status file
-
-
-
-i = 0
-for sensor in df_config["TempSensor"].tolist():
-    # Iterate over all temp sensors, measure and save values
-    timeNow = time.asctime()
-    T = temps[i]
-    df_tempData = df_tempData.append({"Time": timeNow, "Sensor":sensor, "Temp": T}, ignore_index=True)
-    #df_status[sensor]
-    #Following line finds the names of the tanks associated with the current sensor
-    # being iterated over, returns array
-    tanks = df_config[df_config['TempSensor'] == sensor]['TankName'].values
-    df_status.loc["Temp", tanks] = T
+while True:
+    measureAndRecord()
+    print("temp recorded")
+    time.sleep(5)
 
 #df2 = pd.read_csv("thermo2.csv")
 
@@ -92,8 +96,7 @@ for sensor in df_config["TempSensor"].tolist():
 #df1 = df1.append({"Time":timeNow,"Temp":t1},ignore_index=True)
 #df1.to_csv("thermo1.csv",index=False)
 
-df_tempData.to_csv("tempData.csv",index=False)
-df_status.to_csv("tankStatus.csv")
+
 
 
 #Step four, Append results to long term data file
@@ -103,5 +106,5 @@ if True or 25 > 30:
 
 
 
-print("temperature logged")
+
 
