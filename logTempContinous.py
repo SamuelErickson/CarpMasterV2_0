@@ -65,13 +65,6 @@ def measureAndRecord():
         timeNow = time.asctime()
         T = temps[i]
         df_tempData = df_tempData.append({"Time": timeNow, "Sensor":sensor, "Temp": T}, ignore_index=True)
-        MAXTEMP = 30
-        MINTEMP = 12
-        if T > MAXTEMP:
-            sea.sendEmailAlert("Error temp too high")
-        elif T < MINTEMP:
-            sea.sendEmailAlert("Error temp too low")
-        else:
         #df_status[sensor]
         #Following line finds the names of the tanks associated with the current sensor
         # being iterated over, returns array
@@ -80,12 +73,33 @@ def measureAndRecord():
     df_tempData.to_csv("tempData.csv",index=False)
     df_status.to_csv("tankStatus.csv")
 
+while True:
+    measureAndRecord()
+    time.sleep(5)
 
-measureAndRecord()
+#df2 = pd.read_csv("thermo2.csv")
+
+#t1 = 16 + random.random()*5
+#t1 = read_temp()
+#t2 = "No Sensor Configured"
+#print(t1)
+
+#t2 = 16 + random.random()*5
+
+#time = time.asctime()
+#df1 = df1.append({"Time":time,"Temp":t1},ignore_index=True)
+#df1.to_csv("thermo1.csv",index=False)
+
+#df1 = df1.append({"Time":timeNow,"Temp":t1},ignore_index=True)
+#df1.to_csv("thermo1.csv",index=False)
+
+
+
 
 #Step four, Append results to long term data file
 
-
+if True or 25 > 30:
+    sea.sendEmailAlert("Error temp too high")
 
 
 

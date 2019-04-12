@@ -10,13 +10,15 @@ sudo pip3 install -r CarpMasterV2_0/requirements.txt
 
 # This line installs all needed packages
 #SAM NEEDS TO CHECK THIS WORKS ON NEW RPI
-cat packages.txt | xargs sudo apt-get install
+cat requirements.txt | xargs sudo apt-get install
 
 #Next make sure that all hardware is installed correctly.
 
 
 python3 app.py
 
+
+#You will need to find the serial numbers of all DSB1820 sensors.
 
 # Add OneWire support
 sudo nano /boot/config.txt
@@ -34,5 +36,4 @@ sudo modprobe w1-gpio
 sudo modprobe w1-therm
 cd /sys/bus/w1/devices
 ls
-cd 28-xxxx (change this to match what serial number pops up)
-cat w1_slave
+# At this point you should see one or more entries of the form: cd 28-xxxx, each corresponding to one sensor.

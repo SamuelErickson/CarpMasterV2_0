@@ -4,7 +4,6 @@ from matplotlib.figure import Figure
 import pandas as pd
 import numpy as np
 import io
-#app.import RPi.GPIO as GPIO
 
 
 
@@ -13,11 +12,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    global df_thermo1
-    df_thermo1 = pd.read_csv("/home/pi/CarpMasterV2_0/thermo1.csv")
-    temp = df_thermo1.loc[df_thermo1.shape[0] - 1, "Temp"]
-
-
     GPIO.setmode(GPIO.BCM)
     GPIO.setwarnings(False)
     light1Pin= 17
@@ -31,7 +25,7 @@ def index():
         lightStatus = "ERROR"
 
 
-    df_config = pd.read_csv("tankSettings.csv")
+    df_config = pd.read_csv("tankConfig.csv")
     df_config.set_index(['TankName'], inplace=True)
     df_config.index.name=None
     tables = [df_config.to_html()]
@@ -51,7 +45,7 @@ def index():
 
 @app.route("/tables")
 def show_tables():
-    df_config = pd.read_csv("tankSettings.csv")
+    df_config = pd.read_csv("tankConfig.csv")
     df_config.set_index(['TankName'], inplace=True)
     df_config.index.name=None
     #return render_template('view.html',tables=[df_config.to_html()])
@@ -79,25 +73,6 @@ def plot_temp_A1():
     response.mimetype = 'image/png'
     return response
 
-
-@app.route('/plot/temp/A2')
-def plot_temp_A2():
-    #times, temps, hums = getHistData(numSamples)
-    ys = pd.DataFrame([0,1,2,3,4,5,6,7,6,5,4,3,2])#getDF()['Temperature']
-    fig = Figure()
-    axis = fig.add_subplot(1, 1, 1)
-    axis.set_title("Temperature [C]".encode('utf8'))
-    axis.set_xlabel("Samples")
-    axis.grid(True)
-    axis.set_ylim(0,40)
-    #xs = range(numSamples)
-    axis.plot(ys)
-    canvas = FigureCanvas(fig)
-    output = io.BytesIO()
-    canvas.print_png(output)
-    response = make_response(output.getvalue())
-    response.mimetype = 'image/png'
-    return response
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80, debug=False)

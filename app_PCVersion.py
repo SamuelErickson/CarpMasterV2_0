@@ -20,7 +20,7 @@ def index():
     df_tempData = pd.read_csv("tempData.csv")
 
     global df_config
-    df_config = pd.read_csv("tankSettings.csv")
+    df_config = pd.read_csv("tankConfig.csv")
     #df_config.index.name=None
 
     global df_status

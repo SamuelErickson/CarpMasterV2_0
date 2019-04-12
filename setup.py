@@ -17,7 +17,6 @@ TankConfig = {'TankName': ["Tank_A1", "Tank_A2","Tank_B1", "Tank_B2","Tank_D1", 
                 'LightsOffTime': ["21:00","21:00","21:00","21:00","21:00","21:00"]
 
                 }
-LightSettings = {'LightName': ["Light1"],'TimeOn': ["5:00"],'TimeOff':["21:00"],"Photoperiod":[str(16)+" Hours"]}
 
 #Function: Initialize lights!
 timeNow = time.asctime()
@@ -35,14 +34,12 @@ df_TankStatus = pd.DataFrame(columns=TankConfig["TankName"],index=["Temp","Light
 
 
 df_TankConfig = pd.DataFrame(data=TankConfig)
-df_LightSettings = pd.DataFrame(data=LightSettings)
 
 df_Thermo1 = pd.DataFrame(columns=["Time","Temp"])
 
 df_TempData = pd.DataFrame(columns=["Time","Sensor","Temp"])
 
-df_TankConfig.to_csv("tankSettings.csv",index=False)
-df_LightSettings.to_csv("lightSettings.csv",index=False)
+df_TankConfig.to_csv("tankConfig.csv",index=False)
 df_Thermo1.to_csv("thermo1.csv",index=False)
 
 df_TempData.to_csv("tempData.csv",index=False)
@@ -51,9 +48,7 @@ df_TankStatus.to_csv("tankStatus.csv")
 
 
 
-print(df_LightSettings)
 print(df_TankConfig)
-print(df_Thermo1)
 print(df_TankStatus)
 
 

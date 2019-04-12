@@ -18,7 +18,7 @@ def sendEmailAlert(text = "This is a test of the email reporting system"):
     #server.starttls()
     #server.ehlo()
     #msg.as_string()
-    recipients = ["carpmasterrobot@gmail.com","eric4204@umn.edu","halvo432@umn.edu","tolo0007@umn.edu"]
+    recipients = ["carpmasterrobot@gmail.com","eric4204@umn.edu"]#"halvo432@umn.edu","tolo0007@umn.edu"]
     #recipients = ["carpmasterrobot@gmail.com","eric4204@umn.edu","bajer003@umn.edu","halvo432@umn.edu","hirt0021@umn.edu","hundt002@umn.edu"]
     server.sendmail("carpmasterrobot@gmail.com",recipients, text)
     server.quit()

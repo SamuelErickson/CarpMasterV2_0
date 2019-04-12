@@ -44,8 +44,8 @@ t2 = 16 + random.random()*5
 #Step three, update short term data file
 
 timeNow = time.asctime()
-df1 = df1.append({"Time":timeNow,"Temp":t1},ignore_index=True)
-df1.to_csv("thermo1.csv",index=False)
+#df1 = df1.append({"Time":timeNow,"Temp":t1},ignore_index=True)
+#df1.to_csv("thermo1.csv",index=False)
 
 df_tempData.to_csv("tempData.csv",index=False)
 df_status.to_csv("tankStatus.csv")

@@ -6,7 +6,7 @@ import recordActivity as r
 lights = ["Light1"] #List of lights just switched
 #only one light in current setup, modify if needed
 
-df_config = pd.read_csv("tankSettings.csv")
+df_config = pd.read_csv("tankConfig.csv")
 df_status = pd.read_csv("tankStatus.csv",index_col=0)
 
 
